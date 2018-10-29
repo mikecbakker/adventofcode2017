@@ -2,11 +2,19 @@ package adventofcode;
 
 public class Day3Part1 {
 
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String args[]) {
-
 		mapNumbersOntoPlane(277678);
 	}
 
+	/**
+	 * 
+	 * @param number
+	 *            The number we want to find on the spiral cartesian plane.
+	 */
 	public static void mapNumbersOntoPlane(int number) {
 
 		int x = 0;
@@ -22,9 +30,7 @@ public class Day3Part1 {
 		int n = 1;
 		while (n < number) {
 
-			// sequence
-			// n = 0 => (0, 0)
-			// Right
+			// Move Right
 			if (initiateRight) {
 				x++;
 				closedLoopCounter++;
@@ -38,7 +44,7 @@ public class Day3Part1 {
 					break;
 				}
 			}
-			// Up
+			// Move Up
 			else if (moveUp) {
 				for (int i = 0; i < (2 * closedLoopCounter) - 1; i++) {
 					y++;
@@ -52,7 +58,7 @@ public class Day3Part1 {
 				moveLeft = true;
 				moveUp = false;
 			}
-			// Left
+			// Move Left
 			else if (moveLeft) {
 				for (int i = 0; i < 2 * closedLoopCounter; i++) {
 					x--;
@@ -67,7 +73,7 @@ public class Day3Part1 {
 				moveLeft = false;
 			}
 
-			// Down
+			// Move Down
 			else if (moveDown) {
 				for (int i = 0; i < 2 * closedLoopCounter; i++) {
 					y--;
@@ -82,7 +88,7 @@ public class Day3Part1 {
 				moveDown = false;
 			}
 
-			// Right 2n+1
+			// Move Right
 			else if (moveRight) {
 				for (int i = 0; i < 2 * closedLoopCounter; i++) {
 					x++;
@@ -98,5 +104,4 @@ public class Day3Part1 {
 			}
 		}
 	}
-
 }
