@@ -3,7 +3,7 @@ package adventofcode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day6Part1 {
+public class Day6Part2 {
 
 	/**
 	 * Main entry point
@@ -13,9 +13,20 @@ public class Day6Part1 {
 	 */
 	public static void main(String args[]) throws Exception {
 		String input = "2 8 8 5 4 2 3 1 5 5 1 2 15 13 5 14";
-		String[] inputData = input.split(" ");
-		List<String> previousMemoryModels = new ArrayList<String>();
+		String output = detectCycle(input.split(" "));
+		detectCycle(output.split(" "));
+	}
 
+	/**
+	 * Governs the realloction cycles until such time that a loop is detected.
+	 * 
+	 * @param inputData String array representing the memory blocks allocated per
+	 *                  memory bank
+	 * @return a String representing the resultant memory allocation once all
+	 *         reallocation cycles are complete.
+	 */
+	public static String detectCycle(String[] inputData) {
+		List<String> previousMemoryModels = new ArrayList<String>();
 		String currentMemoryModel = serializeArray(inputData);
 		int count = 0;
 		while (!previousMemoryModels.contains(currentMemoryModel)) {
@@ -29,6 +40,7 @@ public class Day6Part1 {
 			count++;
 		}
 		System.out.println("[count]: " + count);
+		return currentMemoryModel;
 	}
 
 	/**
@@ -53,10 +65,10 @@ public class Day6Part1 {
 				maxMemoryBlockLocation = i;
 			}
 		}
-		
+
 		// Clear the max block before redistribution
 		memoryModel[maxMemoryBlockLocation] = String.valueOf(0);
-		
+
 		// Redistribute blocks
 		int currentAllocationPosition = maxMemoryBlockLocation;
 
@@ -66,11 +78,12 @@ public class Day6Part1 {
 			if (currentAllocationPosition == memoryModel.length) {
 				currentAllocationPosition = 0;
 			}
-			
+
 			// Obtain value at location & increase by number of blocks
 			String countObjects = memoryModel[currentAllocationPosition];
 			memoryModel[currentAllocationPosition] = String.valueOf((Integer.valueOf(countObjects) + 1));
 		}
+
 		return memoryModel;
 	}
 
