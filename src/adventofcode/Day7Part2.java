@@ -21,7 +21,6 @@ public class Day7Part2 {
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		String line;
 
-		Tree nodeTree = new Tree();
 		HashMap<String, Node> nodes = new HashMap<String, Node>();
 
 		// Populate all the node names & weight
@@ -30,7 +29,6 @@ public class Day7Part2 {
 			line = line.replaceAll("->", "");
 			String nodeName = line.substring(0, line.indexOf('('));
 			int nodeWeight = Integer.valueOf(line.substring(line.indexOf('(') + 1, line.indexOf(')')));
-			// String[] childList = line.substring(line.indexOf(')') + 1).split(",");
 
 			// Construct new node
 			Node node = new Node();
@@ -105,45 +103,6 @@ public class Day7Part2 {
 			}
 		}
 		return weight;
-	}
-
-	public static class Tree {
-
-		Node root = null;
-
-		public void insert(Node node, String parentName, Node newNode) {
-			if (parentName == null || node == null) {
-				root = newNode;
-				System.out.println("[Adding new root node: " + newNode.name + "]");
-				return;
-			}
-			List<Node> children = node.getChildren();
-			for (Node child : children) {
-				insert(child, parentName, newNode);
-			}
-			// We have found our parent
-			if (node.name.equals(parentName)) {
-				node.children.add(newNode);
-				System.out.println("[Adding " + newNode.name + " as child of " + node.name + "]");
-			}
-
-		}
-
-		/**
-		 * 
-		 * @param root
-		 * @param path
-		 */
-		public void traverse(Node root, String path) {
-			path += root.getWeight();
-			List<Node> children = root.getChildren();
-			for (Node child : children)
-				traverse(child, path);
-
-			// end of current traversal
-			if (root.getChildren().isEmpty())
-				System.out.print(path + " ");
-		}
 	}
 
 	public static class Node {
